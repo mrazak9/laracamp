@@ -17,39 +17,40 @@
                 @include('components.alert')
                 <table class="table">
                     <tbody>
-                        @forelse ($checkouts as $checkout )
+                        @forelse ($checkouts as $checkout)
                             <tr class="align-middle">
                                 <td width="18%">
-                                    <img src="{{ asset('images/item_bootcamp.png') }}" height="120" alt="">
+                                    <img src="{{asset('images/item_bootcamp.png')}}" height="120" alt="">
                                 </td>
                                 <td>
                                     <p class="mb-2">
                                         <strong>{{$checkout->Camp->title}}</strong>
                                     </p>
                                     <p>
-                                        {{$checkout->Camp->created_at->format('M d, Y')}}
+                                        {{$checkout->created_at->format('M d, Y')}}
                                     </p>
                                 </td>
                                 <td>
-                                    <strong>${{$checkout->Camp->price}}</strong>
+                                    <strong>${{$checkout->Camp->price}}k</strong>
                                 </td>
                                 <td>
-                                    @if ($checkout->is_paid)
-                                        <strong class="text-success">Payment Success</strong>
-                                    @else
-                                        <strong>Waiting for Payment</strong>
+                                    <strong>{{$checkout->payment_status}}</strong>
+                                </td>
+                                <td>
+                                    @if ($checkout->payment_status == 'waiting')
+                                        <a href="{{$checkout->midtrans_url}}" class="btn btn-primary">Pay Here</a>
                                     @endif
                                 </td>
                                 <td>
-                                    <a href="Https://wa.me/082214773030?text=Hi, mohon info kelas {{$checkout->Camp->title}}" class="btn btn-primary">
-                                        Conntact Support
+                                    <a href="https://wa.me/08xxxxxxxx?text=Hi, saya ingin bertanya tentang kelas {{$checkout->Camp->title}}" class="btn btn-primary">
+                                        Contact Support
                                     </a>
                                 </td>
                             </tr>
                         @empty
                             <tr>
                                 <td colspan="5">
-                                    <h3>No Data</h3>
+                                    <h3>No Camp Registered</h3>
                                 </td>
                             </tr>
                         @endforelse
